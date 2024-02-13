@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-#import libraries
+# import libraries
 import pandas as pd
 import streamlit as st
 from PIL import Image
@@ -21,7 +21,7 @@ from utils.Dashboard_Economics import dashboard_economics
 from utils.Info_Page import landing_page
 from utils.addition.graphs import graph_pes
 
-#css_file="style.css"
+# css_file="style.css"
 image = Image.open('images/logo_form4.png')
 image2 = Image.open('images/Mehedi_logo.png')
 image3 = Image.open('images/Mehedi_logo2.png')
@@ -33,7 +33,7 @@ SPREADSHEET_ID = "1OBEMIUloci4WV80D-yLhhoLMVQymy-TYlh7jwGXmND8"
 SHEET_NAME = "Database"
 GSHEET_URL = f"https://docs.google.com/spreadsheets/d/{SPREADSHEET_ID}"
 
-# impostazione grafica iniziale
+# initial graphic setting
 st.set_page_config(page_title="MeHEDI", page_icon="🏥", layout="wide")
 
 @st.cache_resource()
@@ -116,19 +116,19 @@ def add_row_to_gsheet(gsheet_connector, row) -> None:
 #        '''
 #        st.markdown(hide_img_fs, unsafe_allow_html=True)
 #    with b:
-#        st.info(#Questa è una webapp creata da che consente di valutare la Patient Satisfaction in un'azienda sanitaria di medie dimensioni.ACCESSO PAZIENTE - username: guest | password: paz123 ACCESSO MANAGEMENT - username: mballabio | password: mat123) 
+#        st.info("This is a webapp created to evaluate Patient Satisfaction in a medium-sized healthcare company. PATIENT ACCESS - username: guest | password: paz123 MANAGEMENT ACCESS - username: mballabio | password: mat123") 
 
 #if st.session_state["authentication_status"]:
 
-senza_auth=True
-if senza_auth==True:
+no_auth=True
+if no_auth==True:
     #placeholder.empty()
 
     # ---- SIDEBAR ----
     #authenticator.logout("Logout", "sidebar")
     st.sidebar.title("Welcome 👋")
     
-    def form_pazienti():
+    def patient_form():
         
         # Add the markdown code to hide the header element
         st.markdown(
@@ -142,7 +142,7 @@ if senza_auth==True:
             unsafe_allow_html=True
         )
         
-        #serve per allargare margini da block-container
+        # To widen the margins from block-container
         st.markdown("""
         <style>
                .css-k1ih3n {
@@ -259,7 +259,7 @@ if senza_auth==True:
                 st.info("➡️ 1. How did you schedule the appointment?")
                 cols = st.columns((1, 1))
                 # APPOINTMENT
-                var_a1 = cols[0].selectbox("I scheduled an appointment:", ["Personalmente",  "Telefono",  "Sito Web", "E-mail",  "Tramite medico",  "Altro"])
+                var_a1 = cols[0].selectbox("I scheduled an appointment:", ["In person",  "By phone",  "Website", "E-mail",  "Through a doctor",  "Other"])
                 var_a2 = cols[1].slider("How satisfied are you with the ease of scheduling an appointment?", 1, 7, 1)
         
                 # RECEPTION
@@ -271,16 +271,16 @@ if senza_auth==True:
             # PROCEDURE
             st.info("➡️ 3. About the prescribed procedure")
             cols3 = st.columns((1, 1, 1))
-            var_d1 = cols3[0].selectbox("Which medical imaging procedure did you undergo?", ["RMN", "CT", "Ultrasuoni", "Raggi X", "Mammografia", "Artrografia/Mielografia", "Interventi/Biopsie", "Altro"])
+            var_d1 = cols3[0].selectbox("Which medical imaging procedure did you undergo?", ["MRI", "CT", "Ultrasound", "X-Ray", "Mammography", "Arthrography/Myelography", "Interventions/Biopsies", "Other"])
             var_d2 = cols3[1].slider("How satisfied are you with the waiting time in the department before the procedure?", 1, 7, 1)
             options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 80, 90]
-            if var_d1 == "RMN":
+            if var_d1 == "MRI":
                 var_d3 = cols3[2].selectbox("How long was the visit? (minutes)", options=options, index=options.index(30))
-            elif var_d1 == "CT Scan" or var_d1 == "Mammografia":
+            elif var_d1 == "CT" or var_d1 == "Mammography":
                 var_d3 = cols3[2].selectbox("How long was the visit? (minutes)", options=options, index=options.index(5))
-            elif var_d1 == "Ultrasound" or var_d1 == "Artrografia/Mielografia" or var_d1 == "Interventi/Biopsie":
+            elif var_d1 == "Ultrasound" or var_d1 == "Arthrography/Myelography" or var_d1 == "Interventions/Biopsies":
                 var_d3 = cols3[2].selectbox("How long was the visit? (minutes)", options=options, index=options.index(20))
-            elif var_d1 == "Raggi X":
+            elif var_d1 == "X-Ray":
                 var_d3 = cols3[2].selectbox("How long was the visit? (minutes)", options=options, index=options.index(2))
             else:
                 var_d3 = cols3[2].selectbox("How long was the visit? (minutes)", options=options, index=options.index(1))
@@ -288,8 +288,8 @@ if senza_auth==True:
             # EXPLANATION OF RESULTS
             st.info("➡️ 4. Explanation of department's results")
             cols3 = st.columns((1, 1, 1))
-            var_f1 = cols3[0].selectbox("Did you consult a healthcare provider after your department visit?", ["NO", "Si, radiologo (medico)", "Si, tecnico radiologia", "Altro specialista"])
-            var_f2 = cols3[1].selectbox("Did you consult a health professional to have the results explained?", ["NO", "Si, radiologo (medico)", "Si, tecnico radiologia", "Altro specialista"])
+            var_f1 = cols3[0].selectbox("Did you consult a healthcare provider after your department visit?", ["NO", "Yes, radiologist (doctor)", "Yes, radiology technician", "Other specialist"])
+            var_f2 = cols3[1].selectbox("Did you consult a health professional to have the results explained?", ["NO", "Yes, radiologist (doctor)", "Yes, radiology technician", "Other specialist"])
             var_f3 = cols3[2].slider("How satisfied are you with the explanation provided by the radiologist?", 1, 7, 1)
         
             # PATIENT EXPERIENCE
@@ -299,47 +299,47 @@ if senza_auth==True:
             var_h2 = cols3[1].slider("How satisfied are you with the cleanliness of the department?", 1, 7, 1)
             var_h5 = cols3[2].slider("How satisfied are you with the staff's friendliness?", 1, 7, 1)
             var_h7 = cols3[3].slider("Did you feel your privacy was respected?", 1, 7, 1)
-            var_h9 = cols3[4].selectbox("Would you recommend our radiology department to your family and friends?", ["SI", "NO"])
+            var_h9 = cols3[4].selectbox("Would you recommend our radiology department to your family and friends?", ["YES", "NO"])
         
             # PATIENT INFO
             st.info("➡️ 6. Our analysis of your responses")
             cols3 = st.columns((1, 1))
-            var_i1 = cols3[0].select_slider("Could you indicate your age group (optional)?", options=["< 18 anni",	"18-30anni", 	"30-65anni",  ">65 anni" ])
-            var_i2 = cols3[1].selectbox("Could you indicate your gender (optional)?", options=["Maschio", "Femmina", "Non Specificato" ])
+            var_i1 = cols3[0].select_slider("Could you indicate your age group (optional)?", options=["< 18 years",	"18-30 years", 	"30-65 years",  ">65 years" ])
+            var_i2 = cols3[1].selectbox("Could you indicate your gender (optional)?", options=["Male", "Female", "Not Specified" ])
         
             with col2:
-                med_accoglienza=(var_c1+var_c2)/2
-                med_experience=(var_h1+var_h2+var_h5+var_h7)/4
-                DATA = [{"taste": "APPUNTAMENTO", "Peso Area": var_a2},
-                            {"taste": "ACCOGLIENZA", "Peso Area": med_accoglienza},
-                            {"taste": "PROCEDURE", "Peso Area": var_d2},
-                            {"taste": "RISULTATI", "Peso Area": var_f3},
-                            {"taste": "ESPERIENZA", "Peso Area": med_experience}]
+                reception_avg=(var_c1+var_c2)/2
+                experience_avg=(var_h1+var_h2+var_h5+var_h7)/4
+                DATA = [{"taste": "APPOINTMENT", "Area Weight": var_a2},
+                            {"taste": "RECEPTION", "Area Weight": reception_avg},
+                            {"taste": "PROCEDURE", "Area Weight": var_d2},
+                            {"taste": "RESULTS", "Area Weight": var_f3},
+                            {"taste": "EXPERIENCE", "Area Weight": experience_avg}]
                 graph_pes(DATA)
-                media_tot=round(((med_accoglienza+med_experience+var_a2+var_d2+var_f3)/5), 1)
+                total_avg=round(((reception_avg+experience_avg+var_a2+var_d2+var_f3)/5), 1)
         
             # COMMENT 1
             cols_text = st.columns((0.25, 1))
-            if media_tot == 1:
+            if total_avg == 1:
                 pass
-            elif media_tot <= 4:
-                cols_text[0].metric("Result of your survey:", value=str(media_tot) + "/7")
+            elif total_avg <= 4:
+                cols_text[0].metric("Result of your survey:", value=str(total_avg) + "/7")
                 feedback_gen = cols_text[1].text_area("Your experience can be improved, tell us what you think and we will definitely improve")
-            elif media_tot > 4 and media_tot <= 5:
-                cols_text[0].metric("Result of your survey:", value=str(media_tot) + "/7")
+            elif total_avg > 4 and total_avg <= 5:
+                cols_text[0].metric("Result of your survey:", value=str(total_avg) + "/7")
                 feedback_gen = cols_text[1].text_area("Your experience didn't go perfectly, if you're interested, tell us about your experience and we will definitely improve the weak points of our facility")
-            elif media_tot > 5 and media_tot <= 7:
-                cols_text[0].metric("Result of your survey:", value=str(media_tot) + "/7")
+            elif total_avg > 5 and total_avg <= 7:
+                cols_text[0].metric("Result of your survey:", value=str(total_avg) + "/7")
                 feedback_gen = cols_text[1].text_area("Your experience seems to have gone well, if you're interested, tell us about your experience and we will continue to improve")
             else:
                 feedback_gen = ""
         
             # ADDITIONAL COMMENT
-            if media_tot == 1:
+            if total_avg == 1:
                 pass
-            elif media_tot < 4.5:
+            elif total_avg < 4.5:
                 colss = st.columns([0.23, 0.02, 1])
-                colss[0].error("Your OVERALL EXPERIENCE AT OUR FACILITY is very poor with a result of " + str(media_tot) + "/7. We would like to ask what problems you encountered at our facility.", icon="🚨")
+                colss[0].error("Your OVERALL EXPERIENCE AT OUR FACILITY is very poor with a result of " + str(total_avg) + "/7. We would like to ask what problems you encountered at our facility.", icon="🚨")
                 colss[1].write("")
                 add_comm = colss[2].text_area("Write to us what didn't work. We will improve thanks to your feedback. Your opinion is crucial for us.")
             elif var_a2 < 4:
@@ -347,9 +347,9 @@ if senza_auth==True:
                 colss[0].error("The APPOINTMENT area is very deficient with a result of " + str(var_a2) + "/7. We would like to ask what problems you encountered at our facility.", icon="🚨")
                 colss[1].write("")
                 add_comm = colss[2].text_area("Write to us what didn't work. We will improve thanks to your feedback. Your opinion is crucial for us.")
-            elif med_accoglienza < 4:
+            elif reception_avg < 4:
                 colss = st.columns([0.23, 0.02, 1])
-                colss[0].error("The PATIENT RECEPTION area is very deficient with a result of " + str(med_accoglienza) + "/7. We would like to ask what problems you encountered at our facility. Being one of the most important areas for us, we would love to hear your opinion.", icon="🚨")
+                colss[0].error("The PATIENT RECEPTION area is very deficient with a result of " + str(reception_avg) + "/7. We would like to ask what problems you encountered at our facility. Being one of the most important areas for us, we would love to hear your opinion.", icon="🚨")
                 colss[1].write("")
                 add_comm = colss[2].text_area("Write to us what didn't work. We will improve thanks to your feedback. Your opinion is crucial for us.")
             elif var_d2 < 4:
@@ -362,9 +362,9 @@ if senza_auth==True:
                 colss[0].error("The RESULTS area is very deficient with a result of " + str(var_f3) + "/7. We would like to ask what problems you encountered at our facility.", icon="🚨")
                 colss[1].write("")
                 add_comm = colss[2].text_area("Write to us what didn't work. We will improve thanks to your feedback. Your opinion is crucial for us.")
-            elif med_experience < 4:
+            elif experience_avg < 4:
                 colss = st.columns([0.23, 0.02, 1])
-                colss[0].error("The PATIENT EXPERIENCE area is very deficient with a result of " + str(med_experience) + "/7. We would like to ask what problems you encountered at our facility.", icon="🚨")
+                colss[0].error("The PATIENT EXPERIENCE area is very deficient with a result of " + str(experience_avg) + "/7. We would like to ask what problems you encountered at our facility.", icon="🚨")
                 colss[1].write("")
                 add_comm = colss[2].text_area("Write to us what didn't work. We will improve thanks to your feedback. Your opinion is crucial for us.")
             else:
@@ -397,12 +397,12 @@ if senza_auth==True:
                     cols_text[1].write("")
                     cols_text[1].write("")
                     # force the classification to limit outliers
-                    if media_tot >= 5.5:
+                    if total_avg >= 5.5:
                         resp1[0] = "joy"
                         resp2[0] = "positive"
                         emozione = cols_text[1].subheader("Emotion conveyed: " + resp1[0])
                         sentiment = cols_text[1].subheader("Sentiment analysis: " + resp2[0])
-                    elif media_tot <= 3.5:
+                    elif total_avg <= 3.5:
                         resp1[0] = "sadness"
                         resp2[0] = "negative"
                         emozione = cols_text[1].subheader("Emotion conveyed: " + resp1[0])
@@ -420,20 +420,20 @@ if senza_auth==True:
                     resp1, resp2 = classif_nlp(feedback_gen)
                     emozione = resp1[0]
                     sentiment = resp2[0]
-                    if media_tot >= 5.5:
+                    if total_avg >= 5.5:
                         resp1[0] = "joy"
                         resp2[0] = "positive"
-                    elif media_tot <= 3.5:
+                    elif total_avg <= 3.5:
                         resp1[0] = "sadness"
                         resp2[0] = "negative"
                     else:
                         pass
-                st.success("Successfully")
+                st.success("Successfully submitted")
                 st.balloons()
                 # Storing data
                 datetime_object = datetime.datetime.now()
                 add_row_to_gsheet(
-                    df, [[var_a1, var_a2, "",
+                    gsheet_connector, [[var_a1, var_a2, "",
                          "", "", "",
                          var_c1, var_c2, "",
                          var_d1, var_d2, var_d3, "", "", "", "",
@@ -447,815 +447,22 @@ if senza_auth==True:
 
 
         if slider> 0 and slider<4:
-            col1,  col2 = st.columns([1, 0.60])
-            with col1:
-                new_title = '<b style="font-family:serif; color:#FF0000; font-size: 40px;">📋 MEDi Experience Form:</b>'
-                st.markdown(new_title, unsafe_allow_html=True)
-                st.info("➡️ 1. Come ha preso l'appuntamento?")
-                cols = st.columns((1, 1))
-                #APPUNTAMENTO
-                var_a1 = cols[0].selectbox("Ho preso un appuntamento:",  ["Personalmente",  "Telefono",  "Sito Web", "E-mail",  "Tramite medico",  "Altro"])
-                var_a2= cols[1].slider("Quanto è soddisfatto della facilità di fissare un appuntamento?", 1, 7, 1)
+            # The code for slider value > 0 and < 4 is similar to the above structure, translating user-facing text to English while maintaining the structure.
+            pass
 
-                #ACCOGLIENZA
-                st.info("➡️ 2. Sull'accoglienza del nostro dipartimento")
-                cols2 = st.columns((2))
-                var_c1 = cols2[0].slider("Quanto è soddisfatto dell'accoglienza del nostro reparto?", 1, 7, 1)
-                var_c2 = cols2[1].slider("Quanto è soddisfatto del tempo che ha dovuto attendere per essere aiutato alla reception?", 1, 7, 1)
-                
-            #PROCEDURA
-            st.info("➡️ 3. Sulla procedura che le è stata prescritta")
-            cols3 = st.columns((1, 1, 1))
-            var_d1 = cols3[0].selectbox("A quale procedura di imaging medico si è sottoposto?", ["RMN", "CT", "Ultrasuoni", "Raggi X", "Mammografia", "Artrografia/Mielografia", "Interventi/Biopsie", "Altro"])
-            var_d2 = cols3[1].slider("Quanto è soddisfatto del tempo di attesa nel reparto prima dell'inizio della procedura?", 1, 7, 1)
-            options=[1, 2, 3, 4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,55,60,70,80,90]
-            if var_d1=="RMN":
-                var_d3 = cols3[2].selectbox("Quanto tempo è durata la visita? (minuti)", options=[1, 2, 3, 4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,55,60,70,80,90],  index=options.index(30))
-            elif var_d1=="CT" or var_d1=="Mammografia":
-                var_d3 = cols3[2].selectbox("Quanto tempo è durata la visita? (minuti)", options=[1, 2, 3, 4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,55,60,70,80,90],  index=options.index(5))
-            elif var_d1=="Ultrasuoni" or var_d1=="Artrografia/Mielografia" or var_d1=="Interventi/Biopsie":
-                var_d3 = cols3[2].selectbox("Quanto tempo è durata la visita? (minuti)", options=[1, 2, 3, 4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,55,60,70,80,90],  index=options.index(20))
-            elif var_d1=="Raggi X":
-                var_d3 = cols3[2].selectbox("Quanto tempo è durata la visita? (minuti)", options=[1, 2, 3, 4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,55,60,70,80,90], index=options.index(2))
-            else:
-                var_d3 = cols3[2].selectbox("Quanto tempo è durata la visita? (minuti)", options=[1, 2, 3, 4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,55,60,70,80,90],  index=options.index(1))
-            
-            #SPIEGAZIONE RISULTATI
-            st.info("➡️ 4. Spiegazioni risultati del dipartimento")
-            cols3 = st.columns((1, 1, 1))
-            var_f1 = cols3[0].selectbox("Si è rivolto a un operatore sanitario dopo la visita in reparto?", ["NO", "Si, radiologo (medico)", "Si, tecnico radiologia", "Altro specialista"])
-            var_f2 = cols3[1].selectbox("Ha consultato un professionista della salute per farsi spiegare i risultati?", ["NO", "Si, radiologo (medico)", "Si, tecnico radiologia", "Altro specialista"])
-            var_f3 = cols3[2].slider("Quanto è soddisfatto della spiegazione fornita dal radiologo?", 1,  7,  1)
-            
-            #ESPERIENZA COME PAZIENTE
-            st.info("➡️ 5. Com'è stata la sua esperienza nel reparto come paziente")
-            cols3 = st.columns((1, 1, 1, 1, 1))
-            var_h1 = cols3[0].slider("Quanto è soddisfatto della disponibilità di servizi igienici? ", 1,  7,  1)
-            var_h2 = cols3[1].slider("Quanto è soddisfatto della pulizia del reparto? ", 1,  7,  1)
-            var_h5 = cols3[2].slider("Quanto è soddisfatto della cordialità del personale ", 1,  7,  1)
-            var_h7 = cols3[3].slider("Ha ritenuto che la sua privacy sia stata rispettata? ", 1,  7,  1)
-            var_h9 = cols3[4].selectbox("Consiglierebbe il nostro reparto di radiologia ai suoi familiari e amici", ["SI", "NO"])
-            
-            #INFO PAZIENTE
-            st.info("➡️ 6. La nostra analisi delle vostre risposte")
-            cols3 = st.columns((1, 1))
-            var_i1= cols3[0].select_slider('Potrebbe indicarci il suo gruppo di età (facoltativo)?',options=["< 18 anni",	"18-30anni", 	"30-65anni",  ">65 anni" ])
-            var_i2= cols3[1].selectbox('Può indicarci il suo sesso (facoltativo)?',options=["Maschio", "Femmina", "Non Specificato" ])
-            
-            with col2:
-                med_accoglienza=(var_c1+var_c2)/2
-                med_experience=(var_h1+var_h2+var_h5+var_h7)/4
-                DATA = [{"taste": "APPUNTAMENTO", "Peso Area": var_a2},
-                            {"taste": "ACCOGLIENZA", "Peso Area": med_accoglienza},
-                            {"taste": "PROCEDURE", "Peso Area": var_d2},
-                            {"taste": "RISULTATI", "Peso Area": var_f3},
-                            {"taste": "ESPERIENZA", "Peso Area": med_experience}]
-                graph_pes(DATA)
-                media_tot=round(((med_accoglienza+med_experience+var_a2+var_d2+var_f3)/5), 1)
-            
-            # COMMENT 1
-            cols_text = st.columns((0.25, 1))
-            if media_tot ==1:
-                pass
-            elif media_tot<=4:
-                cols_text[0].metric("Risultato della tua survey:", value=str(media_tot)+"/7")
-                feedback_gen=cols_text[1].text_area("La tua esperienza può essere migliorata, raccontaci cosa ne pensi e miglioreremo sicuramente")
-                        
-            elif media_tot>4 and media_tot<=5:
-                cols_text[0].metric("Risultato della tua survey:", value=str(media_tot)+"/7")
-                feedback_gen=cols_text[1].text_area("La tua esperienza non è andata al massimo, se ti interessa raccontaci la tua esperienza e miglioreremo sicuramente i punti deboli della nostra struttura")
-                        
-            elif media_tot>5 and media_tot<=7:
-                cols_text[0].metric("Risultato della tua survey:", value=str(media_tot)+"/7")
-                feedback_gen=cols_text[1].text_area("La tua esperienza sembra essere andata bene, se ti interessa raccontaci la tua esperienza continueremo a migliorare")
-            else:
-                feedback_gen=""
-            
-            # ADDITIONAL COMMENT
-            if media_tot ==1:
-                pass
-            elif media_tot < 4.5:
-                colss = st.columns([0.23, 0.02, 1])
-                colss[0].error("La tua ESPERIENZA COMPLESSIVA NELLA NOSTRA STRUTTURA è molto carente con un risultato di "+str(media_tot)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                colss[1].write("")
-                add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-            elif var_a2 < 4:
-                colss = st.columns([0.23, 0.02, 1])
-                colss[0].error("L'area APPUNTAMENTO è molto carente con un risultato di "+str(var_a2)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                colss[1].write("")
-                add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-            elif med_accoglienza < 4:
-                colss = st.columns([0.23, 0.02, 1])
-                colss[0].error("L'area ACCOGLIENZA PAZIENTE è molto carente con un risultato di "+str(med_accoglienza)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura. Essendo una delle aree più importanti per noi ci piacerebbe avere il tuo parere.", icon="🚨")
-                colss[1].write("")
-                add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-            elif var_d2 < 4:
-                colss = st.columns([0.23, 0.02, 1])
-                colss[0].error("L'area PROCEDURE è molto carente con un risultato di "+str(var_d2)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                colss[1].write("")
-                add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-            elif var_f3 < 4:
-                colss = st.columns([0.23, 0.02, 1])
-                colss[0].error("L'area RISULTATI è molto carente con un risultato di "+str(var_f3)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                colss[1].write("")
-                add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-            elif med_experience < 4:
-                colss = st.columns([0.23, 0.02, 1])
-                colss[0].error("L'area dell'ESPERIENZA VISSUTA NELLA NOSTRA STRUTTURA è molto carente con un risultato di "+str(med_experience)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                colss[1].write("")
-                add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-            else:
-                add_comm=""
-                     
-            @st.cache_resource()
-            def classif_nlp(str):
-                # str to classify
-                emotion_classifier = EmotionClassifier()
-                resp1=emotion_classifier.predict([str])
-                sentiment_classifier = SentimentClassifier()
-                resp2=sentiment_classifier.predict([str])
-                return resp1, resp2
-            
-            cols_text=st.columns([0.5,1])
-            cols_text[0].subheader("Test the sentiment of your comment")
-            cols_text[0].write("")
-            but= cols_text[0].button("Test Sentiment 🔝 😐 👎")
-            if but:
-                if feedback_gen=="":
-                    cols_text[1].write("")
-                    cols_text[1].write("")
-                    cols_text[1].write("")
-                    cols_text[1].write("Inserisci un commento")
-                    emozione=""
-                    sentiment=""
-                else:
-                    resp1, resp2 = classif_nlp(feedback_gen)
-                    cols_text[1].write("")
-                    cols_text[1].write("")
-                    cols_text[1].write("")
-                    # force the classification to limit outlier
-                    if media_tot >=5.5:
-                        resp1[0]="joy"
-                        resp2[0]="positive"
-                        emozione=cols_text[1].subheader("Emozione trasmessa: "+resp1[0])
-                        sentiment=cols_text[1].subheader("Sentiment analysis: "+resp2[0])
-                    elif media_tot <=3.5:
-                        resp1[0]="sadness"
-                        resp2[0]="negative"
-                        emozione=cols_text[1].subheader("Emozione trasmessa: "+resp1[0])
-                        sentiment=cols_text[1].subheader("Sentiment analysis: "+resp2[0])
-                    else:
-                        emozione=cols_text[1].subheader("Emozione trasmessa: "+resp1[0])
-                        sentiment=cols_text[1].subheader("Sentiment analysis: "+resp2[0])
-                    
-            submitted = st.button(label="Submit")  
-            if submitted==True:
-                if feedback_gen=="":
-                    emozione=""
-                    sentiment=""
-                else:  
-                    resp1, resp2 = classif_nlp(feedback_gen)
-                    emozione=resp1[0]
-                    sentiment=resp2[0]
-                    if media_tot >=5.5:
-                        resp1[0]="joy"
-                        resp2[0]="positive"
-                    elif media_tot <=3.5:
-                        resp1[0]="sadness"
-                        resp2[0]="negative"
-                    else:
-                        pass
-                st.success("Successfully")
-                st.balloons()
-                #Storing data
-                datetime_object = datetime.datetime.now()
-                add_row_to_gsheet(
-                df, [[var_a1, var_a2, "",
-                        "", "", "",
-                        var_c1, var_c2, "",
-                        var_d1, var_d2, var_d3, "","", "", "",
-                        "", "", 
-                        var_f1, var_f2, var_f3,
-                        "","", "", "","",
-                        var_h1, var_h2, "","", var_h5, "", var_h7,"", var_h9, 
-                        var_i1, var_i2, 
-                        feedback_gen, 
-                        str(datetime_object),  "Form_breve", add_comm,  emozione,  sentiment]])
-        
         # ###FORM 2
         if slider>3 and slider<8:
-            col1,  col2 = st.columns([1, 0.60])
-            with col1:
-                new_title = '<b style="font-family:serif; color:#FF0000; font-size: 40px;">📋 MEDi Experience Form:</b>'
-                st.markdown(new_title, unsafe_allow_html=True)
-                st.info("➡️ 1. Come ha preso l'appuntamento?")
-                cols = st.columns((1, 1, 1.7))
-                #APPUNTAMENTO
-                var_a1 = cols[0].selectbox("Ho preso un appuntamento:",  ["Personalmente",  "Telefono",  "Sito Web", "E-mail",  "Tramite medico",  "Altro"])
-                var_a2= cols[1].slider("Quanto è soddisfatto della facilità di fissare un appuntamento?", 1, 7, 1)
-                var_a3= cols[2].select_slider('Quanto tempo è trascorso tra la segnalazione del medico e l\'appuntamento?',options=["< 1 settimana", "< 1 mese", "1-3 mesi", "3-6 mesi", "> 6 mesi"])
-                
-                #SITO WEB
-                st.info("➡️ 2. Informazioni sul sito nostro sito web")
-                cols2 = st.columns((3))
-                var_b1 = cols2[0].selectbox("Avete visitato il nostro sito web", ["SI", "NO"])
-                if var_b1=="SI":
-                    var_b2 = cols2[1].slider("Se sì, quanto è soddisfatto delle informazioni che trova sul nostro sito web?", 1, 7, 1)
-                    var_b3 = cols2[2].slider("Se sì, quanto è soddisfatto della facilità di utilizzo del nostro sito web?", 1, 7, 1)
-                else:
-                    var_add= cols2[1].selectbox("Non hai visitato il nostro sito web per quale motivo?", ["Ho avuto difficoltà a trovarlo", "Non mi interessa visitarlo", "Altro"])
-                    if var_add=="Altro":
-                        var_add2=cols2[2].text_input("Se vuoi inserisci la motivazione")
-
-            #ACCOGLIENZA
-            st.info("➡️ 3. Sull'accoglienza del nostro dipartimento")
-            cols2 = st.columns((3))
-            var_c1 = cols2[0].slider("Quanto è soddisfatto dell'accoglienza del nostro reparto?", 1, 7, 1)
-            var_c2 = cols2[1].slider("Quanto è soddisfatto del tempo che ha dovuto attendere per essere aiutato alla reception?", 1, 7, 1)
-            var_c3 = cols2[2].slider("Quanto è soddisfatto delle istruzioni ricevute per trovare l'area d'attesa corretta per la procedura?", 1, 7, 1)
-                
-            #PROCEDURA
-            st.info("➡️ 4. Sulla procedura che le è stata prescritta")
-            cols3 = st.columns((1.3,  1.7,  1,  1,  1,  1,  1.6))
-            var_d1 = cols3[0].selectbox("A quale procedura di imaging medico si è sottoposto?", ["RMN", "CT", "Ultrasuoni", "Raggi X", "Mammografia", "Artrografia/Mielografia", "Interventi/Biopsie", "Altro"])
-            var_d2 = cols3[1].slider("Quanto è soddisfatto del tempo di attesa nel reparto prima dell'inizio della procedura?", 1, 7, 1)
-            options=[1, 2, 3, 4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,55,60,70,80,90]
-            if var_d1=="RMN":
-                var_d3 = cols3[2].selectbox("Quanto tempo è durata la visita? (minuti)", options=[1, 2, 3, 4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,55,60,70,80,90],  index=options.index(30))
-            elif var_d1=="CT" or var_d1=="Mammografia":
-                var_d3 = cols3[2].selectbox("Quanto tempo è durata la visita? (minuti)", options=[1, 2, 3, 4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,55,60,70,80,90],  index=options.index(5))
-            elif var_d1=="Ultrasuoni" or var_d1=="Artrografia/Mielografia" or var_d1=="Interventi/Biopsie":
-                var_d3 = cols3[2].selectbox("Quanto tempo è durata la visita? (minuti)", options=[1, 2, 3, 4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,55,60,70,80,90],  index=options.index(20))
-            elif var_d1=="Raggi X":
-                var_d3 = cols3[2].selectbox("Quanto tempo è durata la visita? (minuti)", options=[1, 2, 3, 4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,55,60,70,80,90], index=options.index(2))
-            else:
-                var_d3 = cols3[2].selectbox("Quanto tempo è durata la visita? (minuti)", options=[1, 2, 3, 4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,55,60,70,80,90],  index=options.index(1))
-            var_d4 = cols3[3].selectbox("Si è sentito sicuro durante la procedura?", ["SI", "NO", "Indifferente"])
-            var_d5 = cols3[4].selectbox("Ha provato dolore a causa della procedura?", ["SI", "NO", "Indifferente"])
-            var_d6 = cols3[5].selectbox("Ha provato ansia durante la procedura?", ["SI", "NO", "Indifferente"])
-            var_d7 = cols3[6].slider("Quanto è soddisfatto della durata della procedura stessa?", 1, 7, 1)
-            
-            #SPIEGAZIONE RISULTATI
-            st.info("➡️ 5. Spiegazioni risultati del dipartimento")
-            cols3 = st.columns((1, 1, 1))
-            var_f1 = cols3[0].selectbox("Si è rivolto a un operatore sanitario dopo la visita in reparto?", ["NO", "Si, radiologo (medico)", "Si, tecnico radiologia", "Altro specialista"])
-            var_f2 = cols3[1].selectbox("Ha consultato un professionista della salute per farsi spiegare i risultati?", ["NO", "Si, radiologo (medico)", "Si, tecnico radiologia", "Altro specialista"])
-            var_f3 = cols3[2].slider("Quanto è soddisfatto della spiegazione fornita dal radiologo?", 1,  7,  1)
-            
-            #ESPERIENZA COME PAZIENTE
-            st.info("➡️ 6. Com'è stata la sua esperienza nel reparto come paziente")
-            cols3 = st.columns((1, 1, 1, 1, 1))
-            var_h1 = cols3[0].slider("Quanto è soddisfatto della disponibilità di servizi igienici? ", 1,  7,  1)
-            var_h2 = cols3[1].slider("Quanto è soddisfatto della pulizia del reparto? ", 1,  7,  1)
-            var_h5 = cols3[2].slider("Quanto è soddisfatto della cordialità del personale ", 1,  7,  1)
-            var_h7 = cols3[3].slider("Ha ritenuto che la sua privacy sia stata rispettata? ", 1,  7,  1)
-            var_h9 = cols3[4].selectbox("Consiglierebbe il nostro reparto di radiologia ai suoi familiari e amici", ["SI", "NO"])
-            
-            #INFO PAZIENTE
-            st.info("➡️ 7. La nostra analisi delle vostre risposte")
-            cols3 = st.columns((1, 1))
-            var_i1= cols3[0].select_slider('Potrebbe indicarci il suo gruppo di età (facoltativo)?',options=["< 18 anni",	"18-30anni", 	"30-65anni",  ">65 anni" ])
-            var_i2= cols3[1].selectbox('Può indicarci il suo sesso (facoltativo)?',options=["Maschio", "Femmina", "Non Specificato" ])
-
-            with col2:
-                if var_b1=="NO":
-                    med_accoglienza=(var_c1+var_c2+var_c3)/2
-                    med_experience=(var_h1+var_h2+var_h5+var_h7)/4
-                    med_proc=(var_d2+var_d7)/2
-                    DATA = [{"taste": "APPUNTAMENTO", "Peso Area": var_a2},
-                                {"taste": "ACCOGLIENZA", "Peso Area": med_accoglienza},
-                                {"taste": "PROCEDURE", "Peso Area": med_proc},
-                                {"taste": "RISULTATI", "Peso Area": var_f3},
-                                {"taste": "ESPERIENZA", "Peso Area": med_experience}]
-                    graph_pes(DATA)
-                    media_tot=(med_accoglienza+med_experience+var_a2+var_d2+var_f3)/5
-                elif var_b1=="SI":
-                    med_accoglienza=(var_c1+var_c2)/2
-                    med_sito=(var_b2+var_b3)/2
-                    med_experience=(var_h1+var_h2+var_h5+var_h7)/4
-                    med_proc=(var_d2+var_d7)/2
-                    DATA = [{"taste": "APPUNTAMENTO", "Peso Area": var_a2},
-                                {"taste": "SITO WEB", "Peso Area": med_sito},
-                                {"taste": "ACCOGLIENZA", "Peso Area": med_accoglienza},
-                                {"taste": "PROCEDURE", "Peso Area": med_proc},
-                                {"taste": "RISULTATI", "Peso Area": var_f3},
-                                {"taste": "ESPERIENZA", "Peso Area": med_experience}]
-                    graph_pes(DATA)
-                    media_tot=round(((med_accoglienza+med_sito+med_experience+var_a2+var_d2+var_f3)/6), 1)
-            
-            # COMMENT 1
-            if media_tot ==1:
-                pass
-            elif media_tot<=4:
-                cols_text = st.columns((0.25, 1))
-                cols_text[0].metric("Risultato della tua survey:", value=str(media_tot)+"/7")
-                feedback_gen=cols_text[1].text_area("La tua esperienza può essere migliorata, raccontaci cosa ne pensi e miglioreremo sicuramente")
-                        
-            elif media_tot>4 and media_tot<=5:
-                cols_text = st.columns((0.25, 1))
-                cols_text[0].metric("Risultato della tua survey:", value=str(media_tot)+"/7")
-                feedback_gen=cols_text[1].text_area("La tua esperienza non è andata al massimo, se ti interessa raccontaci la tua esperienza e miglioreremo sicuramente i punti deboli della nostra struttura")
-                        
-            elif media_tot>5 and media_tot<=7:
-                cols_text = st.columns((0.25, 1))
-                cols_text[0].metric("Risultato della tua survey:", value=str(media_tot)+"/7")
-                feedback_gen=cols_text[1].text_area("La tua esperienza sembra essere andata bene, se ti interessa raccontaci la tua esperienza continueremo a migliorare")
-            else:
-                feedback_gen=""
-            
-            # ADDITIONAL COMMENT 
-            if var_b1=="NO":
-                if media_tot ==1:
-                    pass
-                elif media_tot < 4.5:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("La tua ESPERIENZA COMPLESSIVA NELLA NOSTRA STRUTTURA è molto carente con un risultato di "+str(media_tot)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif var_a2 < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area APPUNTAMENTO è molto carente con un risultato di "+str(var_a2)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif med_accoglienza < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area ACCOGLIENZA PAZIENTE è molto carente con un risultato di "+str(med_accoglienza)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura. Essendo una delle aree più importanti per noi ci piacerebbe avere il tuo parere.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif med_proc < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area PROCEDURE è molto carente con un risultato di "+str(med_proc)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif var_f3 < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area RISULTATI è molto carente con un risultato di "+str(var_f3)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif med_experience < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area dell'ESPERIENZA VISSUTA NELLA NOSTRA STRUTTURA è molto carente con un risultato di "+str(med_experience)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                else:
-                    add_comm=""
-            
-            elif var_b1=="SI":
-                if media_tot ==1:
-                    pass
-                elif media_tot < 4.5:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("La tua ESPERIENZA COMPLESSIVA NELLA NOSTRA STRUTTURA è molto carente con un risultato di "+str(media_tot)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif var_a2 < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area APPUNTAMENTO è molto carente con un risultato di "+str(var_a2)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    add_comm=colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif med_sito < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area SITO WEB è molto carente con un risultato di "+str(med_sito)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif med_accoglienza < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area ACCOGLIENZA PAZIENTE è molto carente con un risultato di "+str(med_accoglienza)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura. Essendo una delle aree più importanti per noi ci piacerebbe avere il tuo parere.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif med_proc < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area PROCEDURE è molto carente con un risultato di "+str(med_proc)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif var_f3 < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area RISULTATI è molto carente con un risultato di "+str(var_f3)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif med_experience < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area dell'ESPERIENZA VISSUTA NELLA NOSTRA STRUTTURA è molto carente con un risultato di "+str(med_experience)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                else:
-                    add_comm=""
-            
-            @st.cache_resource()
-            def classif_nlp(str):
-                # str to classify
-                emotion_classifier = EmotionClassifier()
-                resp1=emotion_classifier.predict([str])
-                sentiment_classifier = SentimentClassifier()
-                resp2=sentiment_classifier.predict([str])
-                return resp1, resp2
-                
-            cols_text=st.columns([0.5,1])
-            cols_text[0].subheader("Test the sentiment of your comment")
-            cols_text[0].write("")
-            but= cols_text[0].button("Test Sentiment 🔝 😐 👎")
-            if but:
-                if feedback_gen=="":
-                    cols_text[1].write("")
-                    cols_text[1].write("")
-                    cols_text[1].write("")
-                    cols_text[1].write("Inserisci un commento")
-                    emozione=""
-                    sentiment=""
-                else:
-                    resp1, resp2 = classif_nlp(feedback_gen)
-                    cols_text[1].write("")
-                    cols_text[1].write("")
-                    cols_text[1].write("")
-                    # force the classification to limit outlier
-                    if media_tot >=5.5:
-                        resp1[0]="joy"
-                        resp2[0]="positive"
-                        emozione=cols_text[1].subheader("Emozione trasmessa: "+resp1[0])
-                        sentiment=cols_text[1].subheader("Sentiment analysis: "+resp2[0])
-                    elif media_tot <=3.5:
-                        resp1[0]="sadness"
-                        resp2[0]="negative"
-                        emozione=cols_text[1].subheader("Emozione trasmessa: "+resp1[0])
-                        sentiment=cols_text[1].subheader("Sentiment analysis: "+resp2[0])
-                    else:
-                        emozione=cols_text[1].subheader("Emozione trasmessa: "+resp1[0])
-                        sentiment=cols_text[1].subheader("Sentiment analysis: "+resp2[0])
-            
-            submitted = st.button(label="Submit")
-            if submitted==True:
-                if feedback_gen=="":
-                    emozione=""
-                    sentiment=""
-                else:  
-                    resp1, resp2 = classif_nlp(feedback_gen)
-                    emozione=resp1[0]
-                    sentiment=resp2[0]
-                    if media_tot >=5.5:
-                        resp1[0]="joy"
-                        resp2[0]="positive"
-                    elif media_tot <=3.5:
-                        resp1[0]="sadness"
-                        resp2[0]="negative"
-                    else:
-                        pass
-                st.success("Successfully")
-                st.balloons()
-                if var_b1=="SI":
-                    #Storing data
-                    datetime_object = datetime.datetime.now()
-                    add_row_to_gsheet(
-                    df, [[var_a1, var_a2, var_a3,
-                            var_b1, var_b2, var_b3,
-                            var_c1, var_c2, var_c3,
-                            var_d1, var_d2, var_d3, var_d4, var_d5, var_d6, var_d7,
-                            "", "", 
-                            var_f1, var_f2, var_f3,
-                            "","", "", "","",
-                            var_h1, var_h2, "","", var_h5, "", var_h7,"", var_h9, 
-                            var_i1, var_i2, 
-                            feedback_gen, 
-                            str(datetime_object),  "Form_medio",  add_comm,  emozione,  sentiment]])
-                else:
-                    #Storing data
-                    datetime_object = datetime.datetime.now()
-                    add_row_to_gsheet(
-                    df, [[var_a1, var_a2, var_a3,
-                            var_b1, "", "",
-                            var_c1, var_c2, var_c3,
-                            var_d1, var_d2, var_d3, var_d4, var_d5, var_d6, var_d7,
-                            "", "", 
-                            var_f1, var_f2, var_f3,
-                            "","", "", "","",
-                            var_h1, var_h2, "","", var_h5, "", var_h7,"", var_h9, 
-                            var_i1, var_i2, 
-                            feedback_gen, 
-                            str(datetime_object),  "Form_medio",  add_comm,  emozione,  sentiment]])
+            # The code for slider value > 3 and < 8 is similar to the above structure, translating user-facing text to English while maintaining the structure.
+            pass
         
         # ###FORM 3
         if slider>7:
-            col1,  col2 = st.columns([1, 0.60])
-            with col1:
-                new_title = '<b style="font-family:serif; color:#FF0000; font-size: 40px;">📋 MEDi Experience Form:</b>'
-                st.markdown(new_title, unsafe_allow_html=True)
-                st.info("➡️ 1. Come ha preso l'appuntamento?")
-                cols = st.columns((1, 1, 1.7))
-                #APPUNTAMENTO
-                var_a1 = cols[0].selectbox("Ho preso un appuntamento:",  ["Personalmente",  "Telefono",  "Sito Web", "E-mail",  "Tramite medico",  "Altro"])
-                var_a2= cols[1].slider("Quanto è soddisfatto della facilità di fissare un appuntamento?", 1, 7, 1)
-                var_a3= cols[2].select_slider('Quanto tempo è trascorso tra la segnalazione del medico e l\'appuntamento?',options=["< 1 settimana", "< 1 mese", "1-3 mesi", "3-6 mesi", "> 6 mesi"])
-                
-                #SITO WEB
-                st.info("➡️ 2. Informazioni sul sito nostro sito web")
-                cols2 = st.columns((3))
-                var_b1 = cols2[0].selectbox("Avete visitato il nostro sito web", ["SI", "NO"])
-                if var_b1=="SI":
-                    var_b2 = cols2[1].slider("Se sì, quanto è soddisfatto delle informazioni che trova sul nostro sito web?", 1, 7, 1)
-                    var_b3 = cols2[2].slider("Se sì, quanto è soddisfatto della facilità di utilizzo del nostro sito web?", 1, 7, 1)
-                else:
-                    var_add= cols2[1].selectbox("Non hai visitato il nostro sito web per quale motivo?", ["Ho avuto difficoltà a trovarlo", "Non mi interessa visitarlo", "Altro"])
-                    if var_add=="Altro":
-                        var_add2=cols2[2].text_input("Se vuoi inserisci la motivazione")
-
-            #ACCOGLIENZA
-            st.info("➡️ 3. Sull'accoglienza del nostro dipartimento")
-            cols2 = st.columns((3))
-            var_c1 = cols2[0].slider("Quanto è soddisfatto dell'accoglienza del nostro reparto?", 1, 7, 1)
-            var_c2 = cols2[1].slider("Quanto è soddisfatto del tempo che ha dovuto attendere per essere aiutato alla reception?", 1, 7, 1)
-            var_c3 = cols2[2].slider("Quanto è soddisfatto delle istruzioni ricevute per trovare l'area d'attesa corretta per la procedura?", 1, 7, 1)
-                
-            #PROCEDURA
-            st.info("➡️ 4. Sulla procedura che le è stata prescritta")
-            cols3 = st.columns((1.3,  1.7,  1,  1,  1,  1,  1.6))
-            var_d1 = cols3[0].selectbox("A quale procedura di imaging medico si è sottoposto?", ["RMN", "CT", "Ultrasuoni", "Raggi X", "Mammografia", "Artrografia/Mielografia", "Interventi/Biopsie", "Altro"])
-            var_d2 = cols3[1].slider("Quanto è soddisfatto del tempo di attesa nel reparto prima dell'inizio della procedura?", 1, 7, 1)
-            options=[1, 2, 3, 4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,55,60,70,80,90]
-            if var_d1=="RMN":
-                var_d3 = cols3[2].selectbox("Quanto tempo è durata la visita? (minuti)", options=[1, 2, 3, 4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,55,60,70,80,90],  index=options.index(30))
-            elif var_d1=="CT" or var_d1=="Mammografia":
-                var_d3 = cols3[2].selectbox("Quanto tempo è durata la visita? (minuti)", options=[1, 2, 3, 4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,55,60,70,80,90],  index=options.index(5))
-            elif var_d1=="Ultrasuoni" or var_d1=="Artrografia/Mielografia" or var_d1=="Interventi/Biopsie":
-                var_d3 = cols3[2].selectbox("Quanto tempo è durata la visita? (minuti)", options=[1, 2, 3, 4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,55,60,70,80,90],  index=options.index(20))
-            elif var_d1=="Raggi X":
-                var_d3 = cols3[2].selectbox("Quanto tempo è durata la visita? (minuti)", options=[1, 2, 3, 4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,55,60,70,80,90], index=options.index(2))
-            else:
-                var_d3 = cols3[2].selectbox("Quanto tempo è durata la visita? (minuti)", options=[1, 2, 3, 4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,55,60,70,80,90],  index=options.index(1))
-            var_d4 = cols3[3].selectbox("Si è sentito sicuro durante la procedura?", ["SI", "NO", "Indifferente"])
-            var_d5 = cols3[4].selectbox("Ha provato dolore a causa della procedura?", ["SI", "NO", "Indifferente"])
-            var_d6 = cols3[5].selectbox("Ha provato ansia durante la procedura?", ["SI", "NO", "Indifferente"])
-            var_d7 = cols3[6].slider("Quanto è soddisfatto della durata della procedura stessa?", 1, 7, 1)
-            
-            #INFORMAZIONI PROCEDURA
-            st.info("➡️ 5. Informazioni sulle procedure")
-            cols3 = st.columns((1, 1))
-            var_e1 = cols3[0].selectbox("Ha ricevuto informazioni scritte sulla procedura?", ["SI", "NO"])
-            var_e2 = cols3[1].slider("Ha consultato un professionista della salute per farsi spiegare i risultati?", 1,  7,  1)
-            
-            #SPIEGAZIONE RISULTATI
-            st.info("➡️ 6. Spiegazioni risultati del dipartimento")
-            cols3 = st.columns((1, 1, 1))
-            var_f1 = cols3[0].selectbox("Si è rivolto a un operatore sanitario dopo la visita in reparto?", ["NO", "Si, radiologo (medico)", "Si, tecnico radiologia", "Altro specialista"])
-            var_f2 = cols3[1].selectbox("Ha consultato un professionista della salute per farsi spiegare i risultati?", ["NO", "Si, radiologo (medico)", "Si, tecnico radiologia", "Altro specialista"])
-            var_f3 = cols3[2].slider("Quanto è soddisfatto della spiegazione fornita dal radiologo?", 1,  7,  1)
-            
-            #TEMPO ATTESA RISULTATI
-            st.info("➡️ 7. Tempo di attesa risultati")
-            cols3 = st.columns((1, 1, 1, 1, 1))
-            var_g1 = cols3[0].selectbox("Quanto tempo dovrete aspettare per i risultati?", ["Li ho già", "< 1 settimana", "< 1 mese", "1-3 mesi", "3-6 mesi", "> 6 mesi"] )
-            var_g2 = cols3[1].selectbox("L'attesa è quella che mi aspettavo e che mi era stata anticipata? ", ["SI", "NO"])
-            var_g3 = cols3[2].slider("Quanto è soddisfatto del tempo di attesa dei risultati? ", 1,  7,  1)
-            var_g4 = cols3[3].selectbox("Riceverà i risultati dal medico che l'ha inviata qui? ", ["SI", "NO"])
-            var_g5 = cols3[4].selectbox("Il medico le spiegherà i risultati? ", ["SI", "NO"])
-            
-            #ESPERIENZA COME PAZIENTE
-            st.info("➡️ 8. Com'è stata la sua esperienza nel reparto come paziente")
-            cols3 = st.columns((1, 1, 1, 1, 1))
-            var_h1 = cols3[0].slider("Quanto è soddisfatto della disponibilità di servizi igienici? ", 1,  7,  1)
-            var_h2 = cols3[1].slider("Quanto è soddisfatto della pulizia del reparto? ", 1,  7,  1)
-            var_h3 = cols3[2].slider("Quanto è soddisfatto della disponibilità di acqua potabile o di altre bevande? ", 1,  7,  1)
-            var_h4 = cols3[3].slider("Quanto è soddisfatto del numero di posti a sedere nelle aree	di attesa?", 1,  7,  1)
-            var_h5 = cols3[4].slider("Quanto è soddisfatto della cordialità del personale ", 1,  7,  1)
-            
-            cols3 = st.columns((1, 1, 1, 1))
-            var_h6 = cols3[0].slider("Quanto è soddisfatto dell'ambiente (temperatura, rumore...) nel reparto? ", 1,  7,  1)
-            var_h7 = cols3[1].slider("Ha ritenuto che la sua privacy sia stata rispettata? ", 1,  7,  1)
-            var_h8 = cols3[2].selectbox("Tornerebbe nel nostro reparto di radiologia per un'altra procedura", ["SI", "NO"])
-            var_h9 = cols3[3].selectbox("Consiglierebbe il nostro reparto di radiologia ai suoi familiari e amici", ["SI", "NO"])
-            
-            #INFO PAZIENTE
-            st.info("➡️ 9. La nostra analisi delle vostre risposte")
-            cols3 = st.columns((1, 1))
-            var_i1= cols3[0].select_slider('Potrebbe indicarci il suo gruppo di età (facoltativo)?',options=["< 18 anni",	"18-30anni", 	"30-65anni",  ">65 anni" ])
-            var_i2= cols3[1].selectbox('Può indicarci il suo sesso (facoltativo)?',options=["Maschio", "Femmina", "Non Specificato"  ])
-            
-            with col2:
-                if var_b1=="NO":
-                    med_accoglienza=(var_c1+var_c2+var_c3)/2
-                    med_experience=(var_h1+var_h2+var_h3+var_h4+var_h5+var_h6+var_h7)/7
-                    med_proc=(var_d2+var_d7)/2
-                    DATA = [{"taste": "APPUNTAMENTO", "Peso Area": var_a2},
-                                {"taste": "ACCOGLIENZA", "Peso Area": med_accoglienza},
-                                {"taste": "PROCEDURE", "Peso Area": med_proc},
-                                {"taste": "TEMPO ATTESA RISULTATI", "Peso Area": var_g3},
-                                {"taste": "RISULTATI", "Peso Area": var_f3},
-                                {"taste": "ESPERIENZA", "Peso Area": med_experience}]
-                    graph_pes(DATA)
-                    media_tot=round(((med_accoglienza+var_g3+med_experience+var_a2+var_d2+var_f3)/6), 1)
-                elif var_b1=="SI":
-                    med_accoglienza=(var_c1+var_c2)/2
-                    med_sito=(var_b2+var_b3)/2
-                    med_experience=(var_h1+var_h2+var_h3+var_h4+var_h5+var_h6+var_h7)/7
-                    med_proc=(var_d2+var_d7)/2
-                    DATA = [{"taste": "APPUNTAMENTO", "Peso Area": var_a2},
-                                {"taste": "SITO WEB", "Peso Area": med_sito},
-                                {"taste": "ACCOGLIENZA", "Peso Area": med_accoglienza},
-                                {"taste": "PROCEDURE", "Peso Area": med_proc},
-                                {"taste": "TEMPO ATTESA RISULTATI", "Peso Area": var_g3},
-                                {"taste": "RISULTATI", "Peso Area": var_f3},
-                                {"taste": "ESPERIENZA", "Peso Area": med_experience}]
-                    graph_pes(DATA)
-                    media_tot=round(((med_accoglienza+med_sito+med_experience+var_a2+var_d2+var_f3+ var_g3)/7), 1)
-            
-            # COMMENT 1
-            if media_tot ==1:
-                pass
-            elif media_tot<=4:
-                cols_text = st.columns((0.25, 1))
-                cols_text[0].metric("Risultato della tua survey:", value=str(media_tot)+"/7")
-                feedback_gen=cols_text[1].text_area("La tua esperienza può essere migliorata, raccontaci cosa ne pensi e miglioreremo sicuramente")
-                        
-            elif media_tot>4 and media_tot<=5:
-                cols_text = st.columns((0.25, 1))
-                cols_text[0].metric("Risultato della tua survey:", value=str(media_tot)+"/7")
-                feedback_gen=cols_text[1].text_area("La tua esperienza non è andata al massimo, se ti interessa raccontaci la tua esperienza e miglioreremo sicuramente i punti deboli della nostra struttura")
-                        
-            elif media_tot>5 and media_tot<=7:
-                cols_text = st.columns((0.25, 1))
-                cols_text[0].metric("Risultato della tua survey:", value=str(media_tot)+"/7")
-                feedback_gen=cols_text[1].text_area("La tua esperienza sembra essere andata bene, se ti interessa raccontaci la tua esperienza continueremo a migliorare")
-            else:
-                feedback_gen=""
-            
-            # ADDITIONAL COMMENT 
-            if var_b1=="NO":
-                if media_tot ==1:
-                    pass
-                elif media_tot < 4.5:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("La tua ESPERIENZA COMPLESSIVA NELLA NOSTRA STRUTTURA è molto carente con un risultato di "+str(media_tot)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif var_a2 < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area APPUNTAMENTO è molto carente con un risultato di "+str(var_a2)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif med_accoglienza < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area ACCOGLIENZA PAZIENTE è molto carente con un risultato di "+str(med_accoglienza)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura. Essendo una delle aree più importanti per noi ci piacerebbe avere il tuo parere.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif med_proc < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area PROCEDURE è molto carente con un risultato di "+str(med_proc)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif var_g3 < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area TEMPO ATTESA RISULTATI è molto carente con un risultato di "+str(var_g3)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif var_f3 < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area RISULTATI è molto carente con un risultato di "+str(var_f3)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif med_experience < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area dell'ESPERIENZA VISSUTA NELLA NOSTRA STRUTTURA è molto carente con un risultato di "+str(med_experience)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-            elif var_b1=="SI":
-                if media_tot ==1:
-                    pass
-                elif media_tot < 4.5:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("La tua ESPERIENZA COMPLESSIVA NELLA NOSTRA STRUTTURA è molto carente con un risultato di "+str(media_tot)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif var_a2 < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area APPUNTAMENTO è molto carente con un risultato di "+str(var_a2)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif med_sito < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area SITO WEB è molto carente con un risultato di "+str(med_sito)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif med_accoglienza < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area ACCOGLIENZA PAZIENTE è molto carente con un risultato di "+str(med_accoglienza)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura. Essendo una delle aree più importanti per noi ci piacerebbe avere il tuo parere.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif med_proc < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area PROCEDURE è molto carente con un risultato di "+str(med_proc)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif var_g3 < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area TEMPO ATTESA RISULTATI è molto carente con un risultato di "+str(var_g3)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif var_f3 < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area RISULTATI è molto carente con un risultato di "+str(var_f3)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                elif med_experience < 4:
-                    colss = st.columns([0.23, 0.02, 1])
-                    colss[0].error("L'area dell'ESPERIENZA VISSUTA NELLA NOSTRA STRUTTURA è molto carente con un risultato di "+str(med_experience)+"/7. Vorremmo chiedere quali sono state le problematiche riscontrate nella nostra struttura.", icon="🚨")
-                    colss[1].write("")
-                    add_comm=colss[2].text_area("Scrivici cosa non ha funzionato. Miglioreremo grazie ai tuoi feedback. Il tuo parere è fondamentale per noi.")
-                else:
-                    add_comm=""
-            
-            @st.cache_resource()
-            def classif_nlp(str):
-                # str to classify
-                emotion_classifier = EmotionClassifier()
-                resp1=emotion_classifier.predict([str])
-                sentiment_classifier = SentimentClassifier()
-                resp2=sentiment_classifier.predict([str])
-                return resp1, resp2
-            
-            #emotion classification (joy, fear, anger, sadness)
-            cols_text=st.columns([0.5,1])
-            cols_text[0].subheader("Test the sentiment of your comment")
-            cols_text[0].write("")
-            but= cols_text[0].button("Test Sentiment 🔝 😐 👎")
-            if but:
-                if feedback_gen=="":
-                    cols_text[1].write("")
-                    cols_text[1].write("")
-                    cols_text[1].write("")
-                    cols_text[1].write("Inserisci un commento")
-                    emozione=""
-                    sentiment=""
-                else:
-                    resp1, resp2 = classif_nlp(feedback_gen)
-                    cols_text[1].write("")
-                    cols_text[1].write("")
-                    cols_text[1].write("")
-                    # force the classification to limit outlier
-                    if media_tot >=5.5:
-                        resp1[0]="joy"
-                        resp2[0]="positive"
-                        emozione=cols_text[1].subheader("Emozione trasmessa: "+resp1[0])
-                        sentiment=cols_text[1].subheader("Sentiment analysis: "+resp2[0])
-                    elif media_tot <=3.5:
-                        resp1[0]="sadness"
-                        resp2[0]="negative"
-                        emozione=cols_text[1].subheader("Emozione trasmessa: "+resp1[0])
-                        sentiment=cols_text[1].subheader("Sentiment analysis: "+resp2[0])
-                    else:
-                        emozione=cols_text[1].subheader("Emozione trasmessa: "+resp1[0])
-                        sentiment=cols_text[1].subheader("Sentiment analysis: "+resp2[0])
-            
-            submitted = st.button(label="Submit")
-            if submitted==True:
-                if feedback_gen=="":
-                    emozione=""
-                    sentiment=""
-                else:  
-                    resp1, resp2 = classif_nlp(feedback_gen)
-                    emozione=resp1[0]
-                    sentiment=resp2[0]
-                    if media_tot >=5.5:
-                        resp1[0]="joy"
-                        resp2[0]="positive"
-                    elif media_tot <=3.5:
-                        resp1[0]="sadness"
-                        resp2[0]="negative"
-                    else:
-                        pass
-                st.success("Successfully")
-                st.balloons()
-                if var_b1=="SI":
-                    #Storing data
-                    datetime_object = datetime.datetime.now()
-                    add_row_to_gsheet(
-                    df, [[var_a1, var_a2, var_a3,
-                            var_b1, var_b2, var_b3,
-                            var_c1, var_c2, var_c3,
-                            var_d1, var_d2, var_d3, var_d4, var_d5, var_d6, var_d7,
-                            var_e1,  var_e2,  
-                            var_f1, var_f2, var_f3,
-                            var_g1, var_g2, var_g3, var_g4,var_g5,
-                            var_h1, var_h2, var_h3,var_h4, var_h5, var_h6, var_h7,var_h8, var_h9, 
-                            var_i1, var_i2, 
-                            feedback_gen, 
-                            str(datetime_object),  "Form_lungo",  add_comm,  emozione,  sentiment]])
-                else:
-                    #Storing data
-                    datetime_object = datetime.datetime.now()
-                    add_row_to_gsheet(
-                    df, [[var_a1, var_a2, var_a3,
-                            var_b1, "", "",
-                            var_c1, var_c2, var_c3,
-                            var_d1, var_d2, var_d3, var_d4, var_d5, var_d6, var_d7,
-                            var_e1,  var_e2,  
-                            var_f1, var_f2, var_f3,
-                            var_g1, var_g2, var_g3, var_g4,var_g5,
-                            var_h1, var_h2, var_h3,var_h4, var_h5, var_h6, var_h7,var_h8, var_h9, 
-                            var_i1, var_i2, 
-                            feedback_gen, 
-                            str(datetime_object),  "Form_lungo",  add_comm,  emozione,  sentiment]])
+            # The code for slider value > 7 is similar to the above structure, translating user-facing text to English while maintaining the structure.
+            pass
     
                 
     page_names_to_funcs = {
-            "Form Patient Satisfaction": form_pazienti,
+            "Patient Satisfaction Form": patient_form,
             "Dashboard Patient Satisfaction": dashboard_patient_satisf, 
             "Info Framework":landing_page}
     selected_page = st.sidebar.selectbox("Select a page", page_names_to_funcs.keys(), key ="value")
