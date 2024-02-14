@@ -34,7 +34,7 @@ SHEET_NAME = "Database"
 GSHEET_URL = f"https://docs.google.com/spreadsheets/d/{SPREADSHEET_ID}"
 
 # initial graphic setting
-st.set_page_config(page_title="MeHEDI", page_icon="🏥", layout="wide")
+st.set_page_config(page_title="FlowGenius", page_icon="🏥", layout="wide")
 
 @st.cache_resource()
 def connect_to_gsheet():
@@ -183,7 +183,7 @@ if no_auth==True:
         """
         This is a webapp created by that allows you to evaluate Patient Satisfaction.
         
-        Web App URL: <https://mehedi-framework-patientsatisfaction-form.streamlit.app/>
+        
         """
         )
         
@@ -197,13 +197,7 @@ if no_auth==True:
         with a:
             st.write("")
         with b:
-            st.image(image3, width=170)
-            st.markdown("""
-            <div align=center><small>
-            Page views interaction: <img src="https://www.cutercounter.com/hits.php?id=hxndpfn&nd=6&style=52" border="0" alt="hit counter"><br>
-            GitHub <a href="https://github.com/M-ballabio1/MeHEDI-app"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/M-ballabio1/MeHEDI-app?style=social"></a>
-            </small></div>
-            """, unsafe_allow_html=True)
+            st.write("Hello")
         with c:
             st.write("")
         
@@ -215,7 +209,7 @@ if no_auth==True:
             with st.expander("ℹ️ General Form Filling Instructions", expanded=False):
                 st.markdown(
                     """
-                    ### MeHEDI's Return on Experience Framework
+                    ### Return on Experience Framework
                     This framework serves the healthcare facility to collect feedback regarding the services provided to its patients. For any issues upon completing the form, it will be possible to contact the facility via email.
                     """
                 )
@@ -254,7 +248,7 @@ if no_auth==True:
         if slider == 0:
             col1, col2 = st.columns([1, 0.60])
             with col1:
-                new_title = '<b style="font-family:serif; color:#FF0000; font-size: 40px;">📋 MEDi Experience Form:</b>'
+                new_title = '<b style="font-family:serif; color:#FF0000; font-size: 40px;">📋 Experience Form:</b>'
                 st.markdown(new_title, unsafe_allow_html=True)
                 st.info("➡️ 1. How did you schedule the appointment?")
                 cols = st.columns((1, 1))
