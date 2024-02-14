@@ -164,7 +164,7 @@ if no_auth==True:
         </style>
         '''
         st.markdown(hide_img_fs, unsafe_allow_html=True)
-        #t1.markdown("### This section shows some information about MeHEDI - Tool of Patient Satisfaction")
+        #t1.markdown("### This section shows some information about Tool of Patient Satisfaction")
         t2.write("")
 
         reduce_header_height_style = """
@@ -190,7 +190,7 @@ if no_auth==True:
         st.sidebar.title("Support")
         st.sidebar.info(
         """
-        For any issues with app usage, please contact: matteoballabio99@gmail.com
+        For any issues with app usage, please contact:mzozulia@flowgenius.com
         """
         )
         a, b, c = st.sidebar.columns([0.2,1,0.2])
